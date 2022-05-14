@@ -1,0 +1,27 @@
+version: "3.5"
+services:
+  chat:
+    container_name: chat
+    image: keeper-homepage-chat:${CHAT_IMAGE_TAG}
+    volumes:
+      - ./Homepage-ChatServer:/home/keeper
+    ports:
+      - 3002:3002
+    entrypoint: "/home/keeper/entrypoint.sh"
+    environment:
+      - TZ=Asia/Seoul
+      - BABEL_DISABLE_CACHE=1
+
+  chat_db:
+    container_name: chat_db
+    image: keeper-homepage-chat-db:${CHAT_IMAGE_TAG}
+    ports:
+      - "3306:3306"
+    environment:
+      - MYSQL_DATABASE=${CHAT_DATABASE}
+      - MYSQL_ROOT_PASSWORD=${CHAT_ROOT_PASSWORD}
+      - MYSQL_USER=${CHAT_USER}
+      - MYSQL_PASSWORD=${CHAT_PASSWORD}
+    command:
+      - --character-set-server=utf8mb4
+      - --collation-server=utf8mb4_unicode_ci
