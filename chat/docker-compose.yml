@@ -4,10 +4,10 @@ services:
     container_name: chat
     image: keeper-homepage-chat:${CHAT_IMAGE_TAG}
     volumes:
-      - ./Homepage-ChatServer:/home/keeper
+      - ../../Homepage-ChatServer:/home/keeper
     ports:
       - 3002:3002
-    entrypoint: "/home/keeper/entrypoint.sh"
+    entrypoint: "/entrypoint.sh"
     environment:
       - TZ=Asia/Seoul
       - BABEL_DISABLE_CACHE=1

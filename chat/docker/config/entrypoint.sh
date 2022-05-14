@@ -1,5 +1,7 @@
 #!/bin/sh
 
+cd /home/keeper
+
 yarn && yarn global add pm2
 
 yarn db:migrate
