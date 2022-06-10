@@ -1,1 +1,13 @@
+Homepage-Back
+Homepage-Front
+Homepage-ChatServer
+
 .env
+
+init.sql
+
+.DS_Store
+*.DS_Store
+._.DS_Store
+**/.DS_Store
+**/._.DS_Store
