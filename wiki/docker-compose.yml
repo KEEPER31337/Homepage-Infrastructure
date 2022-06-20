@@ -2,7 +2,7 @@
 version: '3'
 services:
   mediawiki:
-    image: mediawiki
+    image: mediawiki:1.38.1
     # restart: always
     ports:
       - 3001:80
