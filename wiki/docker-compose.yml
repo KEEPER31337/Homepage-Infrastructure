@@ -1,5 +1,4 @@
-
-version: '3'
+version: '3.5'
 services:
   mediawiki:
     image: mediawiki:1.38.1
@@ -7,7 +6,9 @@ services:
     ports:
       - 3001:80
     volumes:
-      - ./images:/var/www/html/images
-      - ./LocalSettings.php:/var/www/html/LocalSettings.php
+      - images:/var/www/html/images
       - skins:/var/www/html/skins
-
+      - ./LocalSettings.php:/var/www/html/LocalSettings.php
+volumes:
+  images:
+  skins:
