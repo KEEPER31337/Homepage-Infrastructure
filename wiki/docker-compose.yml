@@ -1,0 +1,13 @@
+
+version: '3'
+services:
+  mediawiki:
+    image: mediawiki
+    # restart: always
+    ports:
+      - 3001:80
+    volumes:
+      - ./images:/var/www/html/images
+      - ./LocalSettings.php:/var/www/html/LocalSettings.php
+      - skins:/var/www/html/skins
+
