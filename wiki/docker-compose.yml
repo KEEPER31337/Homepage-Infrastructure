@@ -1,4 +1,4 @@
-version: '3.5'
+version: "3.5"
 services:
   mediawiki:
     image: mediawiki:1.38.1
@@ -8,6 +8,7 @@ services:
     volumes:
       - images:/var/www/html/images
       - skins:/var/www/html/skins
+      # You can comment below line if you don't have `LocalSettings.php` file.
       - ./LocalSettings.php:/var/www/html/LocalSettings.php
 volumes:
   images:
