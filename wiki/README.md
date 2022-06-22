@@ -18,3 +18,7 @@
   - If you don't want to use docker volume on `LocalSettings.php`, you can edit it freely.
 
   - [Related discussion link](https://github.com/KEEPER31337/Homepage-Infra/pull/2#discussion_r902809768)
+
+- DB network
+  - `server` 디렉토리의 `db` container와 통신이 되어야 하므로, `external network` 추가.
+  - 환경수정 시, wiki db가 존재하는 container와 `network`를 연결 시켜줄 것
