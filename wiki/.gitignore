@@ -1,0 +1,7 @@
+*.tar
+*.tar.gz
+
+images/*
+!images/README
+
+LocalSettings.php
