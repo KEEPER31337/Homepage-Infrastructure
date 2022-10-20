@@ -1,0 +1,41 @@
+{
+	"@metadata": {
+		"authors": [
+			"ديفيد",
+			"محمد أحمد عبد الفتاح"
+		]
+	},
+	"skinname-liberty": "الحرية",
+	"liberty-desc": "مظهر استجابة لـ[https://librewiki.net/ LibreWiki]",
+	"liberty-dark-default": "لا تتجاهل",
+	"liberty-dark-dark": "تجاهل وتفعيل وضع الظلام",
+	"liberty-dark-light": "تجاهل وتفعيل وضع المشرق",
+	"liberty-feed-new": "[جديد]",
+	"liberty-font-name-default": "الافتراضي",
+	"liberty-forgot-pw": "نسيت كلمة مرورك؟",
+	"liberty-login": "تسجيل الدخول",
+	"liberty-login-alter": "تسجيل الدخول بطريقة أخرى",
+	"liberty-login-btn": "تسجيل الدخول",
+	"liberty-info": "معلومات",
+	"liberty-purge": "تطهير",
+	"liberty-recent-discussions": "المناقشات الأخيرة",
+	"liberty-remember": "تذكر تسجيل دخولي",
+	"liberty-share": "شارك",
+	"liberty-tooltip-info": "عرض معلومات المستند",
+	"liberty-tooltip-purge": "تطهير ذاكرة التخزين المؤقت لهذه الصفحة.",
+	"liberty-view-more": "عرض المزيد",
+	"liberty.css": "/* CSS الموضوعة هنا ستؤثر على مستخدمي مظهر الحرية */",
+	"liberty.js": "/* سيتم تحميل أي جافا سكريبت هنا للمستخدمين الذين يستخدمون مظهر الحرية */",
+	"prefs-liberty": "مظهر الحرية",
+	"prefs-color": "إعداد اللون",
+	"liberty-pref-color-main": "اللون الأساسي",
+	"liberty-pref-color-main-help": "اللون الرئيسي الذي سيتم استخدامه في هذا الموقع.",
+	"liberty-pref-color-second": "اللون الثانوي",
+	"liberty-pref-color-second-help": "اللون الثانوي الذي سيتم استخدامه في هذا الموقع.",
+	"prefs-font": "تفضيلات الخط",
+	"liberty-pref-fonts": "حدد الخط الذي تريد استخدامه",
+	"liberty-pref-fonts-helplabel": "مساعدة",
+	"liberty-pref-fonts-help": "سيتم تحميل الخط من خوادم جوجل باستثناء الخط Malgun Gothic.",
+	"liberty-pref-dark": "تجاهل إعداد وضع النظام المظلم؟",
+	"liberty-pref-dark-help": "اختر ما إذا كنت تريد اتباع إعدادات النظام عند تنشيط الوضع المظلم."
+}

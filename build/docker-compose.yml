@@ -1,0 +1,42 @@
+version: "3.5"
+
+services:
+  app:
+    container_name: app
+    image: keeper-homepage-app:build
+    volumes:
+      - ./Homepage-Back:/home/keeper
+    ports:
+      - 8080:8080
+    entrypoint: "/entrypoint.sh"
+    environment:
+      - SECRET=${SECRET}
+      - MAIL_HOST=${MAIL_HOST}
+      - MAIL_PORT=${MAIL_PORT}
+      - MAIL_USERNAME=${MAIL_USERNAME}
+      - MAIL_PASSWORD=${MAIL_PASSWORD}
+      - MYSQL_DATABASE=${MYSQL_DATABASE}
+      - MYSQL_USER=${MYSQL_USER}
+      - MYSQL_PASSWORD=${MYSQL_PASSWORD}
+    depends_on:
+      - db
+
+  db:
+    container_name: db
+    image: keeper-homepage-db:build
+    environment:
+      - MYSQL_DATABASE=${MYSQL_DATABASE}
+      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
+      - MYSQL_USER=${MYSQL_USER}
+      - MYSQL_PASSWORD=${MYSQL_PASSWORD}
+    command:
+      - --character-set-server=utf8mb4
+      - --collation-server=utf8mb4_unicode_ci
+    ports:
+      - 3306:3306
+
+  redis:
+    container_name: redis
+    image: redis:6.2
+    ports:
+      - 6379:6379

@@ -1,6 +1,7 @@
 FROM mysql/mysql-server:8.0
 
-ADD data/db/mysql.cnf /etc/mysql/conf.d/mysql.cnf
+COPY data/mysql.cnf /etc/mysql/conf.d/mysql.cnf
+COPY data/init.sql /docker-entrypoint-initdb.d/init.sql
 
 RUN ln -sf /usr/share/zoneinfo/Asia/Seoul /etc/localtime
 

@@ -1,0 +1,31 @@
+{
+	"@metadata": {
+		"authors": [
+			"Beta16",
+			"Dansita",
+			"JackLantern"
+		]
+	},
+	"skinname-liberty": "Liberty",
+	"liberty-dark-default": "Non ignorare",
+	"liberty-dark-dark": "Ignora e attiva la modalità scura",
+	"liberty-dark-light": "Ignora e attiva la modalità chiara",
+	"liberty-feed-new": "[Nuovo]",
+	"liberty-font-name-default": "predefinito",
+	"liberty-forgot-pw": "Hai dimenticato la password?",
+	"liberty-login": "Entra",
+	"liberty-login-alter": "Accedi con un altro metodo",
+	"liberty-login-btn": "Entra",
+	"liberty-share": "Condividi",
+	"liberty-tooltip-purge": "Pulisci la cache di questa pagina.",
+	"liberty.css": "/* Gli stili CSS inseriti qui si applicano agli utenti che usano il tema Liberty */",
+	"liberty.js": "/* Il codice JavaScript inserito qui viene caricato dagli utenti che usano il tema Liberty */",
+	"liberty-pref-color-main": "Colore principale",
+	"liberty-pref-color-main-help": "Colore principale che sarà utilizzato in questo sito.",
+	"liberty-pref-color-second": "Colore secondario",
+	"liberty-pref-color-second-help": "Colore secondario che sarà utilizzato in questo sito.",
+	"prefs-font": "Preferenze font",
+	"liberty-pref-fonts": "Seleziona il carattere che vuoi utilizzare",
+	"liberty-pref-fonts-helplabel": "Aiuto",
+	"liberty-pref-fonts-help": "Il carattere verrà caricato dai server di Google ad eccezione del carattere Malgun Gothic."
+}

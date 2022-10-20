@@ -1,0 +1,28 @@
+{
+	"@metadata": {
+		"authors": [
+			"DannyS712",
+			"Fitoschido",
+			"MarcoAurelio"
+		]
+	},
+	"liberty-dark-default": "No ignorar",
+	"liberty-feed-new": "[Nuevo]",
+	"liberty-font-name-default": "predeterminado",
+	"liberty-login": "Acceder",
+	"liberty-login-btn": "Acceder",
+	"liberty-info": "Información",
+	"liberty-purge": "Purgar",
+	"liberty-recent-discussions": "Debates recientes",
+	"liberty-share": "Compartir",
+	"liberty-tooltip-purge": "Purgar la antememoria de esta página.",
+	"liberty-view-more": "Ver más",
+	"liberty.css": "/* El CSS colocado en esta página afectará a los usuarios que usen la apariencia \"Liberty\" */",
+	"liberty.js": "/* Cualquier código JavaScript escrito aquí se cargará para todos los usuarios que usen la apariencia Liberty */",
+	"liberty-pref-color-main": "Color principal",
+	"liberty-pref-color-second": "Color secundario",
+	"prefs-font": "Preferencia tipográfica",
+	"liberty-pref-fonts": "Selecciona el tipo de letra que quieres utilizar",
+	"liberty-pref-fonts-helplabel": "Ayuda",
+	"liberty-pref-fonts-help": "El tipo de letra se cargará desde los servidores de Google, con la excepción de Malgun Gothic."
+}

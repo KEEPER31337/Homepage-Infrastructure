@@ -11,3 +11,5 @@ init.sql
 ._.DS_Store
 **/.DS_Store
 **/._.DS_Store
+
+deploy/docker/data/wiki/images
