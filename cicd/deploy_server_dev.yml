@@ -92,4 +92,4 @@ jobs:
           key: ${{ secrets.KEY }}
           script: |
             cd ~/keeper
-            ./deploy_back.sh ${{ github.sha::8 }}
+            ./deploy_server.sh ${{ github.sha::8 }}

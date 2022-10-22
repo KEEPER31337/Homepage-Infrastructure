@@ -37,14 +37,6 @@ services:
     ports:
       - 6379:6379
 
-  #  chat:
-  #    container_name: chat
-  #    image: keeper-homepage-chat:prod
-  #    volumes:
-  #     - /home/ubuntu/keeper/chatServer:/home/keeper
-  #    ports:
-  #     - 3002:3002
-
   nginx:
     container_name: nginx
     image: keeper-homepage-nginx:prod

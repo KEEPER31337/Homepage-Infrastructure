@@ -66,4 +66,4 @@ jobs:
           key: ${{ secrets.KEY_PROD }}
           script: |
             cd ~/keeper
-            ./deploy_front.sh ${{ github.sha::8 }}
+            ./deploy_client.sh ${{ github.sha::8 }}

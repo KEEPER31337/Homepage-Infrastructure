@@ -5,14 +5,14 @@ if [ $# -ne 1 ]; then
     exit -1
 fi
 
-BUILD_PATH="docker/data/client"
+BUILD_PATH="docker/data"
 
 aws s3 cp s3://keeper-homepage/prod/front/$1.tar.gz $BUILD_PATH
 
-if [ -d $BUILD_PATH/build ]
+if [ -d $BUILD_PATH/client ]
 then
-    rm -rf $BUILD_PATH/build/*
+    rm -rf $BUILD_PATH/client/*
 fi
 
-tar -zxvf $BUILD_PATH/$1.tar.gz -C $BUILD_PATH/build
+tar -zxvf $BUILD_PATH/$1.tar.gz -C $BUILD_PATH/client --strip 1
 rm $BUILD_PATH/$1.tar.gz
