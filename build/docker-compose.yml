@@ -4,8 +4,6 @@ services:
   app:
     container_name: app
     image: keeper-homepage-app:build
-    volumes:
-      - ./Homepage-Back:/home/keeper
     ports:
       - 8080:8080
     entrypoint: "/entrypoint.sh"
