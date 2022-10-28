@@ -48,7 +48,7 @@ jobs:
         run: |
           RESULT=$(curl \
             -H "Accept: application/vnd.github+json" \
-            -H "Authorization: Bearer ${{ secrets.TOKEN }}" \
+            -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" \
             '${{ secrets.CACHE_PATH }}')
 
           if [[ $RESULT == *"created_at"* ]]

@@ -48,7 +48,7 @@ jobs:
         run: |
           RESULT=$(curl \
             -H "Accept: application/vnd.github+json" \
-            -H "Authorization: Bearer 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" \
+            -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" \
             'https://api.github.com/repos/redundant4u/git-test/actions/caches?key=Linux-gradle-1')
 
           if [[ $RESULT == *"created_at"* ]]
