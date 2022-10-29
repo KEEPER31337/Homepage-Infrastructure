@@ -6,12 +6,12 @@ on:
 
 jobs:
   deploy_development:
-    runs-on: ubuntu-18.04
+    runs-on: ubuntu-20.04
     timeout-minutes: 10
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v1
@@ -48,13 +48,13 @@ jobs:
         run: CI= npm run build
 
       - name: Compress
-        run: tar -zcvf ${{ github.sha::8 }}.tar.gz build
+        run: tar -zcvf ${GITHUB_SHA::8}.tar.gz build
 
       - name: Upload to S3
         run: |
           aws s3 mv --region ap-northeast-2 \
-          ${{ github.sha::8 }}.tar.gz \
-          ${{ secrets.S3_DEV_FRONT_LOCATION }}/${{ github.sha::8 }}.tar.gz
+          ${GITHUB_SHA::8}.tar.gz \
+          ${{ secrets.S3_DEV_FRONT_LOCATION }}/${GITHUB_SHA::8}.tar.gz
 
       - name: Deploy
         uses: appleboy/ssh-action@master
@@ -65,4 +65,4 @@ jobs:
           key: ${{ secrets.KEY }}
           script: |
             cd ~/keeper
-            ./deploy_client.sh ${{ github.sha::8 }}
+            ./deploy_client.sh ${GITHUB_SHA::8}
