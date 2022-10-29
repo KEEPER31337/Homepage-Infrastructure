@@ -60,9 +60,19 @@ jobs:
         uses: appleboy/ssh-action@master
         with:
           host: ${{ secrets.HOST_PROD }}
-          username: ${{ secrets.USERNAME }}
-          port: ${{ secrets.PORT }}
+          username: ${{ secrets.USERNAME_PROD }}
+          port: ${{ secrets.PORT_PROD }}
           key: ${{ secrets.KEY_PROD }}
           script: |
             cd ~/keeper
             ./deploy_client.sh ${GITHUB_SHA::8}
+
+      - name: Notify Slack
+        if: always()
+        uses: 8398a7/action-slack@v3
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+        with:
+          status: ${{ job.status }}
+          author_name: Keeper Production Frontend CICD
+          fields: repo, commit, message, author, action, took

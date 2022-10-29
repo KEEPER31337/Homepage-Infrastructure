@@ -48,7 +48,7 @@ jobs:
         run: |
           RESULT=$(curl \
             -H "Accept: application/vnd.github+json" \
-            -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" \
+            -H "Authorization: Bearer ${{ secrets.TOKEN }}" \
             'https://api.github.com/repos/redundant4u/git-test/actions/caches?key=Linux-gradle-1')
 
           if [[ $RESULT == *"created_at"* ]]
@@ -141,8 +141,8 @@ jobs:
         uses: appleboy/ssh-action@master
         with:
           host: ${{ secrets.HOST_PROD }}
-          username: ${{ secrets.USERNAME }}
-          port: ${{ secrets.PORT }}
+          username: ${{ secrets.USERNAME_PROD }}
+          port: ${{ secrets.PORT_PROD }}
           key: ${{ secrets.KEY_PROD }}
           script: |
             cd ~/keeper
