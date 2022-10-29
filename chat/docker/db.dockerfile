@@ -1,6 +1,6 @@
 FROM mysql/mysql-server:8.0
 
-ADD config/db/mysql.cnf /etc/mysql/conf.d/mysql.cnf
+ADD data/db/mysql.cnf /etc/mysql/conf.d/mysql.cnf
 
 RUN ln -sf /usr/share/zoneinfo/Asia/Seoul /etc/localtime
 

@@ -1,10 +1,11 @@
 version: "3.5"
+
 services:
   chat:
     container_name: chat
-    image: keeper-homepage-chat:${CHAT_IMAGE_TAG}
+    image: keeper-homepage-chat:prod
     volumes:
-      - ../../Homepage-ChatServer:/home/keeper
+      - ./Homepage-ChatServer:/home/keeper
     ports:
       - 3002:3002
     entrypoint: "/entrypoint.sh"
@@ -14,7 +15,7 @@ services:
 
   chat_db:
     container_name: chat_db
-    image: keeper-homepage-chat-db:${CHAT_IMAGE_TAG}
+    image: keeper-homepage-chat-db:prod
     ports:
       - "3306:3306"
     environment:
