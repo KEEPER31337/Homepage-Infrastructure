@@ -6,4 +6,4 @@ COPY docker/data/server/homepage-0.0.1-SNAPSHOT.jar /app.jar
 
 RUN ln -sf /usr/share/zoneinfo/Asia/Seoul /etc/localtime
 
-ENTRYPOINT ["java", "-jar", "-Duser.timezone=Asia/Seoul", "/app.jar"]
+ENTRYPOINT ["java", "-jar", "-Dspring.profiles.active=deploy", "-Duser.timezone=Asia/Seoul", "/app.jar"]

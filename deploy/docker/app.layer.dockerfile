@@ -9,4 +9,4 @@ COPY docker/data/server/application .
 
 RUN ln -sf /usr/share/zoneinfo/Asia/Seoul /etc/localtime
 
-ENTRYPOINT ["java", "-Duser.timezone=Asia/Seoul", "org.springframework.boot.loader.JarLauncher"]
+ENTRYPOINT ["java", "-Dspring.profiles.active=deploy", "-Duser.timezone=Asia/Seoul", "org.springframework.boot.loader.JarLauncher"]
