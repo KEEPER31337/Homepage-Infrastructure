@@ -63,8 +63,9 @@ jobs:
           username: ${{ secrets.USERNAME_DEV }}
           port: ${{ secrets.PORT_DEV }}
           key: ${{ secrets.KEY_DEV }}
+          env: GITHUB_SHA
           script: |
-            cd ~/keeper
+            cd ~/keeper/deploy
             ./deploy_client.sh ${GITHUB_SHA::8}
 
       - name: Notify Slack

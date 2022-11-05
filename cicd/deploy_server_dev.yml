@@ -73,7 +73,7 @@ jobs:
           path: |
             ~/.gradle/caches
             ~/.gradle/wrapper
-          key: ${{ runner.os }}-gradle-${{ steps.cache.outputs.new }
+          key: ${{ runner.os }}-gradle-${{ steps.cache.outputs.new }}
           restore-keys: |
             ${{ runner.os }}-gradle-
 
@@ -99,6 +99,7 @@ jobs:
         run: |
           touch application.properties
           echo '${{ secrets.APPLICATION_PROPERTIES }}' >> application.properties
+          echo '${{ secrets.APPLICATION_PROPERTIES_DEPLOY }}' >> application-deploy.properties
 
       - name: Start Containers
         working-directory: ./docker
@@ -137,8 +138,9 @@ jobs:
           username: ${{ secrets.USERNAME_DEV }}
           port: ${{ secrets.PORT_DEV }}
           key: ${{ secrets.KEY_DEV }}
+          env: GITHUB_SHA
           script: |
-            cd ~/keeper
+            cd ~/keeper/deploy
             ./deploy_server.sh ${GITHUB_SHA::8}
 
       - name: Notify Slack
