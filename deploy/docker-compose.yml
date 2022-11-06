@@ -43,6 +43,7 @@ services:
     volumes:
       - ./docker/data/nginx/nginx.conf:/etc/nginx/nginx.conf
       - ./docker/data/nginx/conf.d:/etc/nginx/conf.d
+      - ./docker/data/client/build:/home/keeper/front
     ports:
       - 80:80
       - 443:443
