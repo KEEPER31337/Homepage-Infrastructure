@@ -36,7 +36,7 @@ jobs:
         uses: actions/cache@v3
         with:
           path: "**/node_modules"
-          key: ${{ runner.os }}-node-${{ hasFiles("**/package-lock.json") }}
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
           restore-keys: |
             ${{ runner.os }}-node-
 
@@ -63,7 +63,7 @@ jobs:
           username: ${{ secrets.USERNAME_PROD }}
           port: ${{ secrets.PORT_PROD }}
           key: ${{ secrets.KEY_PROD }}
-          env: GITHUB_SHA
+          envs: GITHUB_SHA
           script: |
             cd ~/keeper/deploy
             ./deploy_client.sh ${GITHUB_SHA::8}

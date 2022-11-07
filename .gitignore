@@ -4,6 +4,8 @@ Homepage-ChatServer
 
 .env
 
+.vscode
+
 init.sql
 
 .DS_Store
@@ -13,3 +15,5 @@ init.sql
 **/._.DS_Store
 
 deploy/docker/data/wiki/images
+
+keeper_files
