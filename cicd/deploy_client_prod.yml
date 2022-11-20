@@ -2,7 +2,7 @@ name: Deploy Client Production
 
 on:
   push:
-    branches: [main, develop]
+    branches: [main]
 
 jobs:
   deploy_production:
