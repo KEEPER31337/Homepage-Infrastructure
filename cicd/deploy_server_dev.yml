@@ -1,17 +1,12 @@
-name: Deploy Server Development
+name: Deploy Keeper Dev Server
 
 on:
   push:
     branches: [develop]
 
-env:
-  LANG: "ko_KR.UTF-8"
-  LANGUAGE: "ko_KR.UTF-8"
-  LC_ALL: "ko_KR.UTF-8"
-
 jobs:
   deploy_development:
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-22.04
     timeout-minutes: 10
 
     steps:

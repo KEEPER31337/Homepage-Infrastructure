@@ -1,4 +1,4 @@
-name: Deploy Client Development
+name: Deploy Keeper Dev Client
 
 on:
   push:
@@ -6,7 +6,7 @@ on:
 
 jobs:
   deploy_development:
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-22.04
     timeout-minutes: 10
 
     steps:
@@ -42,7 +42,7 @@ jobs:
 
       - name: Install Dependencies
         if: steps.cache.outputs.cache-hit != 'true'
-        run: npm i --force
+        run: npm ci
 
       - name: Build
         run: CI= npm run build

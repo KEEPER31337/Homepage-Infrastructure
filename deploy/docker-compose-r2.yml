@@ -1,0 +1,55 @@
+version: "3.5"
+
+services:
+  app:
+    container_name: app-r2
+    image: keeper-homepage-app:r2
+    ports:
+      - 8081:8080
+    entrypoint: "/entrypoint.sh"
+    command: tail -f /dev/null
+    environment:
+      - SECRET=${SECRET}
+      - DB_HOST=${DB_HOST}
+      - DB_PORT=${DB_PORT}
+      - MYSQL_DATABASE=${MYSQL_DATABASE}
+      - MYSQL_USER=${MYSQL_USER}
+      - MYSQL_PASSWORD=${MYSQL_PASSWORD}
+      - REDIS_HOST=${REDIS_HOST}
+      - REDIS_PORT=${REDIS_PORT}
+      - MAIL_HOST=${MAIL_HOST}
+      - MAIL_PORT=${MAIL_PORT}
+    depends_on:
+      - db
+
+  db:
+    container_name: db-r2
+    image: keeper-homepage-db:r2
+    environment:
+      - MYSQL_DATABASE=${MYSQL_DATABASE}
+      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
+      - MYSQL_USER=${MYSQL_USER}
+      - MYSQL_PASSWORD=${MYSQL_PASSWORD}
+    command:
+      - --character-set-server=utf8mb4
+      - --collation-server=utf8mb4_unicode_ci
+    ports:
+      - 3307:3306
+
+  nginx:
+    container_name: nginx-r2
+    image: keeper-homepage-nginx:dev
+    volumes:
+      - ./docker/data/nginx/nginx.conf:/etc/nginx/nginx.conf
+      - ./docker/data/nginx/conf.d:/etc/nginx/conf.d
+      - ./docker/data/client/build_r2:/home/keeper/front
+    ports:
+      - 80:80
+      - 443:443
+    command: sh -c "nginx && tail -f /dev/null"
+
+  redis:
+    container_name: redis-r2
+    image: redis:7-alpine3.17
+    ports:
+      - 6380:6379
