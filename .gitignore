@@ -6,7 +6,8 @@ Homepage-ChatServer
 
 .vscode
 
-init.sql
+*.sql
+*.tar.gz
 
 .DS_Store
 *.DS_Store
@@ -17,3 +18,5 @@ init.sql
 deploy/docker/data/wiki/images
 
 keeper_files
+
+imgs
