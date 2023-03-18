@@ -1,34 +1,24 @@
-name: Deploy Server Development
+name: Deploy Keeper Development Server
 
 on:
   push:
     branches: [develop]
 
-env:
-  LANG: "ko_KR.UTF-8"
-  LANGUAGE: "ko_KR.UTF-8"
-  LC_ALL: "ko_KR.UTF-8"
-
 jobs:
   deploy_development:
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-22.04
     timeout-minutes: 10
 
     steps:
       - name: Checkout
         uses: actions/checkout@v3
 
-      - name: Set Locale
-        run: |
-          sudo locale-gen ko_KR.UTF-8
-          sudo update-locale LANG=ko_KR.UTF-8
-
       - name: Configure AWS Credentials
-        uses: aws-actions/configure-aws-credentials@v1
+        uses: aws-actions/configure-aws-credentials@v2
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: ap-northeast-2
+          aws-region: ${{ secrets.AWS_REGION }}
 
       - name: Login to ECR
         id: login-ecr
@@ -48,7 +38,7 @@ jobs:
         run: |
           RESULT=$(curl \
             -H "Accept: application/vnd.github+json" \
-            -H "Authorization: Bearer ${{ secrets.TOKEN }}" \
+            -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" \
             "${{ secrets.CACHE_PATH }}-1")
 
           if [[ $RESULT == *"created_at"* ]]
@@ -87,19 +77,17 @@ jobs:
             ~/db-docker-image/keeper-homepage-db.tar \
             $ECR_REGISTRY/keeper-homepage-db:${{ secrets.KEEPER_DB_TAG }}
 
-      - name: Create Env File
+      - name: Create Docker Env File
         working-directory: ./docker
         run: |
-          touch .env
           echo "${{ secrets.DOCKER_ENV }}" >> .env
           echo "ECR_REGISTRY=${{ steps.login-ecr.outputs.registry }}" >> .env
 
-      - name: Create application.properties
+      - name: Create application.yml
         working-directory: ./src/main/resources
         run: |
-          touch application.properties
-          echo '${{ secrets.APPLICATION_PROPERTIES }}' >> application.properties
-          echo '${{ secrets.APPLICATION_PROPERTIES_DEPLOY }}' >> application-deploy.properties
+          echo '${{ secrets.APPLICATION_YML }}' >> application.yml
+          echo '${{ secrets.APPLICATION_YML_DEPLOY }}' >> application-deploy.yml
 
       - name: Start Containers
         working-directory: ./docker
@@ -120,9 +108,29 @@ jobs:
 
       - name: Upload to S3
         run: |
-          aws s3 mv --region ap-northeast-2 \
+          aws s3 mv --region ${{ secrets.AWS_REGION }} \
           ${GITHUB_SHA::8}.tar.gz \
           ${{ secrets.S3_DEV_BACK_LOCATION }}/${GITHUB_SHA::8}.tar.gz
+
+      - name: Deploy
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.SSH_HOST_DEV }}
+          username: ${{ secrets.SSH_USERNAME_DEV }}
+          port: ${{ secrets.SSH_PORT_DEV }}
+          key: ${{ secrets.SSH_KEY_DEV }}
+          envs: GITHUB_SHA
+          script: |
+            cd ~/keeper/renewal/deploy
+            ./deploy_server.sh ${GITHUB_SHA::8}
+
+      - name: Delete Previous Gradle Cache
+        run: |
+          curl \
+            -X DELETE \
+            -H "Accept: application/vnd.github+json" \
+            -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" \
+            "${{ secrets.CACHE_PATH }}-${{ steps.cache.outputs.old }}"
 
       - name: Update Test Result
         if: failure()
@@ -130,18 +138,6 @@ jobs:
           aws s3 cp --region ap-northeast-2 --recursive \
           build/reports/tests/test \
           ${{ secrets.S3_TEST_REPORT }} --recursive
-
-      - name: Deploy
-        uses: appleboy/ssh-action@master
-        with:
-          host: ${{ secrets.HOST_DEV }}
-          username: ${{ secrets.USERNAME_DEV }}
-          port: ${{ secrets.PORT_DEV }}
-          key: ${{ secrets.KEY_DEV }}
-          envs: GITHUB_SHA
-          script: |
-            cd ~/keeper/deploy
-            ./deploy_server.sh ${GITHUB_SHA::8}
 
       - name: Notify Slack
         if: always()
@@ -152,11 +148,3 @@ jobs:
           status: ${{ job.status }}
           author_name: Keeper Devlopment Backend CICD
           fields: repo, commit, message, author, action, took
-
-      - name: Delete Previous Gradle Cache
-        run: |
-          curl \
-            -X DELETE \
-            -H "Accept: application/vnd.github+json" \
-            -H "Authorization: Bearer ${{ secrets.TOKEN }}" \
-            "${{ secrets.CACHE_PATH }}-${{ steps.cache.outputs.old }}"
