@@ -80,14 +80,14 @@ jobs:
       - name: Create Docker Env File
         working-directory: ./docker
         run: |
-          echo "${{ secrets.DOCKER_ENV }}" >> .env
+          touch .env
           echo "ECR_REGISTRY=${{ steps.login-ecr.outputs.registry }}" >> .env
 
       - name: Create application.yml
         working-directory: ./src/main/resources
         run: |
           echo '${{ secrets.APPLICATION_YML }}' >> application.yml
-          echo '${{ secrets.APPLICATION_YML_DEPLOY }}' >> application-deploy.yml
+          echo '${{ secrets.APPLICATION_DEPLOY_YML }}' >> application-deploy.yml
 
       - name: Start Containers
         working-directory: ./docker
@@ -122,7 +122,7 @@ jobs:
           envs: GITHUB_SHA
           script: |
             cd ~/keeper/renewal/deploy
-            ./deploy_server.sh ${GITHUB_SHA::8}
+            ./deploy_server.sh ${GITHUB_SHA::8} prod
 
       - name: Delete Previous Gradle Cache
         run: |
@@ -146,5 +146,5 @@ jobs:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
         with:
           status: ${{ job.status }}
-          author_name: Keeper Devlopment Backend CICD
+          author_name: Keeper Production Backend CICD
           fields: repo, commit, message, author, action, took

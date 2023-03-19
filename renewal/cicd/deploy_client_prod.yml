@@ -1,24 +1,17 @@
-name: Deploy Keeper Development Client
+name: Deploy Keeper Production Client
 
 on:
   push:
-    branches: [develop]
+    branches: [main]
 
 jobs:
-  deploy_development:
+  deploy_production:
     runs-on: ubuntu-22.04
     timeout-minutes: 10
 
     steps:
       - name: Checkout
         uses: actions/checkout@v3
-
-      - name: Configure AWS Credentials
-        uses: aws-actions/configure-aws-credentials@v2
-        with:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: ${{ secrets.AWS_REGION }}
 
       - name: Setup Node
         uses: actions/setup-node@v3
@@ -27,7 +20,9 @@ jobs:
           cache: "npm"
 
       - name: Create Env File
-        run: echo "${{ secrets.ENV }}" >> .env
+        run: |
+          touch .env
+          echo "${{ secrets.ENV }}" >> .env
 
       - name: Cache node_modules
         id: cache
@@ -48,6 +43,13 @@ jobs:
       - name: Compress
         run: tar -zcvf ${GITHUB_SHA::8}.tar.gz build
 
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v2
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ secrets.AWS_REGION }}
+
       - name: Upload to S3
         run: |
           aws s3 mv --region ap-northeast-2 \
@@ -64,7 +66,7 @@ jobs:
           envs: GITHUB_SHA
           script: |
             cd ~/keeper/renewal/deploy
-            ./deploy_client.sh ${GITHUB_SHA::8}
+            ./deploy_client.sh ${GITHUB_SHA::8} prod
 
       - name: Notify Slack
         if: always()
@@ -73,5 +75,5 @@ jobs:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
         with:
           status: ${{ job.status }}
-          author_name: Keeper Devlopment Frontend CICD
+          author_name: Keeper Production Frontend CICD
           fields: repo, commit, message, author, action, took
