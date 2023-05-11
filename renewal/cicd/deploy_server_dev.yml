@@ -38,8 +38,8 @@ jobs:
         run: |
           RESULT=$(curl \
             -H "Accept: application/vnd.github+json" \
-            -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" \
-            "${{ secrets.CACHE_PATH }}-1")
+            -H "Authorization: Bearer ${{ secrets.API_GITHUB_TOKEN }}" \
+            "${{ secrets.GRADLE_CACHE_PATH }}-1")
 
           if [[ $RESULT == *"created_at"* ]]
           then
@@ -81,6 +81,7 @@ jobs:
         working-directory: ./docker
         run: |
           touch .env
+          echo "KEEPER_DB_TAG=${{ secrets.KEEPER_DB_TAG }}" >> .env
           echo "ECR_REGISTRY=${{ steps.login-ecr.outputs.registry }}" >> .env
 
       - name: Create application.yml
@@ -93,14 +94,14 @@ jobs:
         working-directory: ./docker
         run: docker-compose -p keeper up -d
 
-      - name: Build
+      - name: Build & Test
         run: |
           ./gradlew build --daemon --build-cache --parallel
           java -Djarmode=layertools -jar build/libs/homepage-0.0.1-SNAPSHOT.jar extract
 
       - name: Compress
         run: |
-          tar -zcvf ${GITHUB_SHA::8}.tar.gz \
+          tar -zcf ${GITHUB_SHA::8}.tar.gz \
             dependencies \
             snapshot-dependencies \
             spring-boot-loader \
@@ -129,13 +130,13 @@ jobs:
           curl \
             -X DELETE \
             -H "Accept: application/vnd.github+json" \
-            -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" \
-            "${{ secrets.CACHE_PATH }}-${{ steps.cache.outputs.old }}"
+            -H "Authorization: Bearer ${{ secrets.API_GITHUB_TOKEN }}" \
+            "${{ secrets.GRADLE_CACHE_PATH }}-${{ steps.cache.outputs.old }}"
 
       - name: Update Test Result
         if: failure()
         run: |
-          aws s3 cp --region ap-northeast-2 --recursive \
+          aws s3 cp --region ${{ secrets.AWS_REGION }} --recursive \
           build/reports/tests/test \
           ${{ secrets.S3_TEST_REPORT }} --recursive
 

@@ -6,7 +6,6 @@ services:
     image: keeper-homepage-app:r2
     ports:
       - 8081:8080
-    entrypoint: "/entrypoint.sh"
     command: tail -f /dev/null
     environment:
       - SECRET=${SECRET}
@@ -38,7 +37,7 @@ services:
 
   nginx:
     container_name: nginx-r2
-    image: keeper-homepage-nginx:prod
+    image: keeper-homepage-nginx:${ENV}
     volumes:
       - ./docker/data/nginx/nginx.conf:/etc/nginx/nginx.conf
       - ./docker/data/nginx/conf.d:/etc/nginx/conf.d
@@ -46,6 +45,8 @@ services:
     ports:
       - 81:80
     command: sh -c "nginx && tail -f /dev/null"
+    depends_on:
+      - app
 
   redis:
     container_name: redis-r2

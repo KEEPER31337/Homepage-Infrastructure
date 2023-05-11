@@ -41,7 +41,7 @@ jobs:
         run: CI= npm run build
 
       - name: Compress
-        run: tar -zcvf ${GITHUB_SHA::8}.tar.gz build
+        run: tar -zcf ${GITHUB_SHA::8}.tar.gz build
 
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v2
