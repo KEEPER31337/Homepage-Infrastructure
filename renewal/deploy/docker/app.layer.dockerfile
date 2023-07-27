@@ -4,12 +4,10 @@ WORKDIR /home/keeper
 
 RUN ln -sf /usr/share/zoneinfo/Asia/Seoul /etc/localtime
 
-COPY \
-    docker/data/server/dependencies \
-    docker/data/server/spring-boot-loader \
-    docker/data/server/snapshot-dependencies \
-    docker/data/server/application \
-    ./
+COPY docker/data/server/dependencies .
+COPY docker/data/server/spring-boot-loader .
+COPY docker/data/server/snapshot-dependencies .
+COPY docker/data/server/application .
 
 ENTRYPOINT [ \
     "java", \
