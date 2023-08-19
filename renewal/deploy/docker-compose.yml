@@ -37,13 +37,14 @@ services:
 
   nginx:
     container_name: nginx-r2
-    image: keeper-homepage-nginx:${ENV}
+    image: keeper-homepage-nginx:r2
     volumes:
       - ./docker/data/nginx/nginx.conf:/etc/nginx/nginx.conf
       - ./docker/data/nginx/conf.d:/etc/nginx/conf.d
-      - ./docker/data/client/build:/home/keeper/front
+      - ./docker/data/nginx/ssl:/etc/letsencrypt
     ports:
-      - 81:80
+      - 80:80
+      - 443:443
     command: sh -c "nginx && tail -f /dev/null"
     depends_on:
       - app

@@ -7,7 +7,6 @@ services:
     ports:
       - 8081:8080
     entrypoint: "/entrypoint.sh"
-    command: tail -f /dev/null
     environment:
       - SECRET=${SECRET}
       - DB_HOST=${DB_HOST}
