@@ -2,8 +2,10 @@ version: "3.5"
 
 services:
   app:
-    container_name: app-r2
-    image: keeper-homepage-app:r2
+    container_name: app
+    image: keeper-homepage-app:${ENV}
+    volumes:
+      - ./keeper_files:/home/keeper/keeper_files
     ports:
       - 8081:8080
     command: tail -f /dev/null
@@ -22,8 +24,8 @@ services:
       - db
 
   db:
-    container_name: db-r2
-    image: keeper-homepage-db:r2
+    container_name: db
+    image: keeper-homepage-db:${ENV}
     environment:
       - MYSQL_DATABASE=${MYSQL_DATABASE}
       - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
@@ -36,8 +38,8 @@ services:
       - 3307:3306
 
   nginx:
-    container_name: nginx-r2
-    image: keeper-homepage-nginx:r2
+    container_name: nginx
+    image: keeper-homepage-nginx:${ENV}
     volumes:
       - ./docker/data/nginx/nginx.conf:/etc/nginx/nginx.conf
       - ./docker/data/nginx/conf.d:/etc/nginx/conf.d
@@ -50,7 +52,7 @@ services:
       - app
 
   redis:
-    container_name: redis-r2
+    container_name: redis
     image: redis:7-alpine3.17
     ports:
       - 6380:6379
