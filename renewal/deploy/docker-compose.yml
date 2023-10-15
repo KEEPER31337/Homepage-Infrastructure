@@ -56,3 +56,9 @@ services:
     image: redis:7-alpine3.17
     ports:
       - 6380:6379
+
+  wiki:
+    container_name: wiki
+    image: keeper-homepage-wiki:prod
+    ports:
+      - 3001:3001

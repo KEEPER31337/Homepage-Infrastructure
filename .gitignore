@@ -1,4 +1,5 @@
 Homepage-Back
+Homepage-Back-R2
 Homepage-Front
 Homepage-ChatServer
 
@@ -16,6 +17,9 @@ Homepage-ChatServer
 **/._.DS_Store
 
 deploy/docker/data/wiki/images
+
+renewal/deploy/docker/data/server
+renewal/deploy/docker/data/wiki/images
 
 keeper_files
 
