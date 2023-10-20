@@ -18,7 +18,6 @@ Homepage-ChatServer
 
 deploy/docker/data/wiki/images
 
-renewal/deploy/docker/data/server
 renewal/deploy/docker/data/wiki/images
 
 keeper_files
