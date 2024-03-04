@@ -2,25 +2,29 @@ version: "3.5"
 
 services:
   app:
-    container_name: app
+    container_name: app-r2
     image: keeper-homepage-app:build
     ports:
-      - 8080:8080
+      - 8081:8080
     entrypoint: "/entrypoint.sh"
     environment:
       - SECRET=${SECRET}
+      - DB_HOST=${DB_HOST}
+      - DB_PORT=${DB_PORT}
+      - MYSQL_DATABASE=${MYSQL_DATABASE}
+      - MYSQL_USER=${MYSQL_USER}
+      - MYSQL_PASSWORD=${MYSQL_PASSWORD}
+      - REDIS_HOST=${REDIS_HOST}
+      - REDIS_PORT=${REDIS_PORT}
       - MAIL_HOST=${MAIL_HOST}
       - MAIL_PORT=${MAIL_PORT}
       - MAIL_USERNAME=${MAIL_USERNAME}
       - MAIL_PASSWORD=${MAIL_PASSWORD}
-      - MYSQL_DATABASE=${MYSQL_DATABASE}
-      - MYSQL_USER=${MYSQL_USER}
-      - MYSQL_PASSWORD=${MYSQL_PASSWORD}
     depends_on:
       - db
 
   db:
-    container_name: db
+    container_name: db-r2
     image: keeper-homepage-db:build
     environment:
       - MYSQL_DATABASE=${MYSQL_DATABASE}
@@ -31,10 +35,10 @@ services:
       - --character-set-server=utf8mb4
       - --collation-server=utf8mb4_unicode_ci
     ports:
-      - 3306:3306
+      - 3307:3306
 
   redis:
-    container_name: redis
-    image: redis:6.2
+    container_name: redis-r2
+    image: redis:7-alpine3.17
     ports:
-      - 6379:6379
+      - 6380:6379
