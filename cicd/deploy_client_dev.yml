@@ -1,4 +1,4 @@
-name: Deploy Client Development
+name: Deploy Keeper Development Client
 
 on:
   push:
@@ -6,30 +6,23 @@ on:
 
 jobs:
   deploy_development:
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-22.04
     timeout-minutes: 10
 
     steps:
       - name: Checkout
         uses: actions/checkout@v3
 
-      - name: Configure AWS Credentials
-        uses: aws-actions/configure-aws-credentials@v1
-        with:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: ap-northeast-2
-
       - name: Setup Node
         uses: actions/setup-node@v3
         with:
-          node-version: "16"
+          node-version: "18"
           cache: "npm"
 
       - name: Create Env File
         run: |
           touch .env
-          echo "${{ secrets.DEV_ENV }}" >> .env
+          echo "${{ secrets.ENV_DEV }}" >> .env
 
       - name: Cache node_modules
         id: cache
@@ -42,13 +35,20 @@ jobs:
 
       - name: Install Dependencies
         if: steps.cache.outputs.cache-hit != 'true'
-        run: npm i --force
+        run: npm ci
 
       - name: Build
         run: CI= npm run build
 
       - name: Compress
-        run: tar -zcvf ${GITHUB_SHA::8}.tar.gz build
+        run: tar -zcf ${GITHUB_SHA::8}.tar.gz build
+
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v2
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ secrets.AWS_REGION }}
 
       - name: Upload to S3
         run: |
@@ -59,14 +59,14 @@ jobs:
       - name: Deploy
         uses: appleboy/ssh-action@master
         with:
-          host: ${{ secrets.HOST_DEV }}
-          username: ${{ secrets.USERNAME_DEV }}
-          port: ${{ secrets.PORT_DEV }}
-          key: ${{ secrets.KEY_DEV }}
+          host: ${{ secrets.SSH_HOST_DEV }}
+          username: ${{ secrets.SSH_USERNAME_DEV }}
+          port: ${{ secrets.SSH_PORT_DEV }}
+          key: ${{ secrets.SSH_KEY_DEV }}
           envs: GITHUB_SHA
           script: |
-            cd ~/keeper/deploy
-            ./deploy_client.sh ${GITHUB_SHA::8}
+            cd ~/keeper/renewal/deploy
+            ./deploy_client.sh ${GITHUB_SHA::8} dev
 
       - name: Notify Slack
         if: always()
