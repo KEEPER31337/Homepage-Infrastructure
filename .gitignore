@@ -10,18 +10,29 @@ Homepage-ChatServer
 *.sql
 *.tar.gz
 
+# Trash Mac data
 .DS_Store
 *.DS_Store
 ._.DS_Store
 **/.DS_Store
 **/._.DS_Store
 
-deploy/docker/data/wiki/images
+# Mediawiki images
+wiki/docker/data/images
 
-renewal/deploy/docker/data/wiki/images
+# Mediawiki Skin
+Liberty
+
+# Spring Boot Build
+application
+dependencies
+snapshot-dependencies
+spring-boot-loader
 
 keeper_files
 
 imgs
 
 reports
+
+backup
