@@ -1,0 +1,23 @@
+version: "3.5"
+
+services:
+  db:
+    container_name: db
+    image: keeper-homepage-db:prod
+    environment:
+      - MYSQL_DATABASE=${MYSQL_DATABASE}
+      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
+      - MYSQL_USER=${MYSQL_USER}
+      - MYSQL_PASSWORD=${MYSQL_PASSWORD}
+    command:
+      - --character-set-server=utf8mb4
+      - --collation-server=utf8mb4_unicode_ci
+    ports:
+      - 3306:3306
+
+  wiki:
+    container_name: wiki
+    image: keeper-homepage-wiki:prod
+    ports:
+      - 80:80
+      - 443:443
